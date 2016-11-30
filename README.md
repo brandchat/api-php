@@ -55,12 +55,12 @@ Ensure that you've initialised the framework as above. Then, to handle an incomi
 <?php
 $brandChat = \BrandChatApi\BrandChatApi::instance();
 
-// create our text handler as a callable
+// create our text handler
 $textHandler = function($event) {
     /** @var \BrandChatApi\Event\MessageEvent $event */
     /** @var \BrandChatApi\Message\TextMessage $textMessage */
     $textMessage = $event->getMessage();
-    $messageText = $textMessage->getText(); // the text that the user sent in!
+    $text = $textMessage->getText(); // the message from the user
     $userId = $textMessage->getUserId(); // the user's unique ID
 
     // and respond with a message
@@ -71,7 +71,7 @@ $textHandler = function($event) {
     $event->respond([$responseMessage]);
 };
 
-// register our handler
+// register our handler for inbound text messages
 $brandChat->onMessageText($textHandler);
 
 // and process the inbound events
@@ -82,7 +82,7 @@ Notes:
 
 * You need to register at least one event handler, otherwise the framework will generate an exception.
 * The relevant event handler will be called once you invoke the `run()` method on the `BrandChatApi` instance.
-* If the event was of a type without an event handler, nothing will happen.
+* If the event was of a type without a registered event handler, nothing will happen.
 * The code sample above would typically be contained in your controller for the route which you register as the *callback URL* on the BrandChat API dashboard.
 * As you can see in the snippet, it's possible to respond immediately to (subscribe and message) events with one or more messages back to the user.
 
@@ -94,10 +94,10 @@ As before, please ensure that you have initialised the framework. Then, provided
 <?php
 // create text message
 $userId = 1337; // typically obtained from an event (like a message from a user)
-$message = 'Hello world!'; // your message!
+$text = 'Hello world!'; // the message you want to send to the user
 
 $textMessage = new \BrandChatApi\Message\TextMessage();
-$textMessage->setUserId($userId)->setText($message);
+$textMessage->setUserId($userId)->setText($text);
 $messageList[] = $textMessage;
 
 // and send it!
@@ -105,9 +105,10 @@ $request = new \BrandChatApi\Request\SendMessageListRequest();
 $response = $request->setMessageList([$textMessage])->execute();
 
 if ($response->isSuccess()) {
-    // Woohoo!
+    // Woohoo -- it was sent!
 } else {
-    // hmmm... Probably a bad key or bot identifier?
+    // Hmmm, sending failed... Probably a bad key or bot identifier?
+    $reason = $response->getReason(); // human readable reason for failure
 }
 ```
 
