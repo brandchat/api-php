@@ -3,8 +3,8 @@ BrandChat API Client PHP implementation
 
 ## Requirements
 
-PHP >= 5.5
-Guzzle
+* PHP >= 5.5
+* [Guzzle](http://docs.guzzlephp.org/en/latest/)
 
 ## Help and docs
 
