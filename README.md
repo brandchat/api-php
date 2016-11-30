@@ -10,9 +10,9 @@ BrandChat API Client PHP implementation
 
 - [Documentation](https://github.com/brandchat/api-documentation)
 
-## Installing BrandChat API Cient
+## Installing
 
-The recommended way to install BrandChat API is through
+The recommended way to install the BrandChat API client is through
 [Composer](http://getcomposer.org).
 
 ```bash
@@ -26,17 +26,17 @@ Next, run the Composer command to install the latest stable version of the Brand
 php composer.phar require brandchat/api-php
 ```
 
-You can then later update BrandChat API using composer:
+You can then later update the BrandChat API using composer:
 
 ```bash
 composer.phar update
 ```
 
-## Quickstart
+## Quickstart guide
 
 ### Configuring the framework
 
-Before using the BrandChatApi framework, you need to initialise it with your bot's api key and bot identifier. Both of these can be found on the BrandChat dashboard menu for your bot after enabling the API for your bot.
+Before using the `BrandChatApi` framework, you need to initialise it with your bot's api key and bot identifier. Both of these can be found on the BrandChat dashboard menu for your bot after enabling the API for your bot.
 
 ```php
 <?php
@@ -111,5 +111,14 @@ if ($response->isSuccess()) {
     $reason = $response->getReason(); // human readable reason for failure
 }
 ```
+
+In general, the preferred way to send messages to the user is by responding with one or more messages to a message event (as per *Processing inbound events* example above).
+
+Sending messages asynchronously should only be done if:
+
+* it will take several seconds or longer to respond to an inbound message event, or
+* you want to send a message *to* a user later that isn't directly triggered by a message *from* a user.
+
+Please note that different messaging platforms have different rules about asynchronous messages to users. WeChat, for example, only allows them in a 48 hour window since the user's last interaction with your bot. Facebook narrows that interaction window to 24 hours for most bots. 
 
 Happy coding!
