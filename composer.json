@@ -1,0 +1,19 @@
+{
+  "name": "brandchat/api-php",
+  "type": "library",
+  "description": "PHP client library for the BrandChat API",
+  "keywords": [
+    "brandchat"
+  ],
+  "homepage": "https://github.com/brandchat/api-php",
+  "license": "MIT",
+  "require": {
+    "php": ">=5.5",
+    "guzzlehttp/guzzle": "~6.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "BrandChatApi\\": "src/"
+    }
+  }
+}
