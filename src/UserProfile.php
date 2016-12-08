@@ -13,7 +13,8 @@ namespace BrandChatApi;
  * @method string getProvince()
  * @method string getCity()
  * @method bool isSubscribed()
- * @method int getLastSubscribeTimestamp
+ * @method int getLastSubscribeTimestamp()
+ * @method string getPlatformIdentifier()
  */
 class UserProfile
 {
