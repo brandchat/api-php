@@ -121,4 +121,25 @@ Sending messages asynchronously should only be done if:
 
 Please note that different messaging platforms have different rules about asynchronous messages to users. WeChat, for example, only allows them in a 48 hour window since the user's last interaction with your bot. Facebook narrows that interaction window to 24 hours for most bots. 
 
+### Web authentication
+
+As always, please ensure that you have initialised the framework. Then, on the web route you've [configured for authenticated web access as per the documentation](https://github.com/brandchat/api-documentation/blob/master/web.md), get the one-time code that is passed through, and use it to retrieve the user's profile. The following example assumes that you've configured your URL to pass through the one-time code in the `code` parameter of the query string.
+
+```php
+<?php
+$code = $_GET['code'];
+$request = new \BrandChatApi\Request\OneTimeCodeLookupRequest();
+$response = $request->setCode($code)->execute();
+
+if ($response->isSuccess()) {
+    // You can get various profile fields from the response, as follows:
+    $displayName = $response->getUserProfile()->getDisplayName();
+    $platformIdentifier = $response->getUserProfile()->getPlatformIdentifier();
+    // todo: do something
+    echo "<html><body><p>Hello, $displayName!</p></body></html>";
+} else {
+    die("Oops, we couldn't authenticate you :(");
+}
+```
+
 Happy coding!
