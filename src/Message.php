@@ -46,7 +46,7 @@ abstract class Message
     /**
      * Constructs a message object based on the data (to be used for user-originated messages only)
      *
-     * @param string $data
+     * @param array $data
      * @return Message
      */
     public static function fromData($data)
